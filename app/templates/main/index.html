@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+
+{% block body %}
+<style>
+tbody {
+    text-align:center;
+}
+</style>
+ <div id="page-wrapper">
+
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        IoT Overview <small> Devices Summary</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info alert-dismissable">
+                        <form action="{{ url_for('main.data_upload') }}"  method="POST" id="test">
+                            <input type="hidden" name="name" value="Smart Light">
+                            <input type="hidden" name="content" value="Light On">
+                            <input type="hidden" name="alarm_type" id="rand">
+                            <input type="hidden" name="IP_address" value="192.168.0.1">
+
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i> IoT 기기가 등록되어 있지 않군요?
+                            <a class="alert-link" onclick= "javascript:random_sel()"> 기기를 등록해주세요!</a>
+                            <br>
+                        </form>
+
+
+                         <!--
+                        <form action="{{ url_for('main.led_on_off') }}" method = "POST" id="test2">
+                            <input type="hidden" name="led_switch" value="1">
+                            <input type="button" onclick="document.getElementById('test2').submit()" value="Turn on">
+                        </form>
+                        <form action="{{ url_for('main.led_on_off') }}" method = "POST" id="test3">
+                            <input type="hidden" name="led_switch" value="0">
+                            <input type="button" onclick="document.getElementById('test3').submit()" value="Turn off">
+                        </form>
+                        -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-sellsy fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">
+                                         {{ dev_count[0] }} 
+                                    </div>
+                                    <div>기기 상태 정보</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히 보기</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ dev_count[1] }}</div>
+                                    <div>기기 알림</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히 보기</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ dev_count[2] }}</div>
+                                    <div>오류 알림</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히 보기</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-warning fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{ dev_count[3] }}</div>
+                                    <div>중요한 알림</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">자세히 보기</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> 전체 보기</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="protocol-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-desktop"></i> Smart Light </h3>
+                        </div>
+                        <div class="panel-body">
+                            {% if is_light_on %}
+                            <!--
+                            <div >
+                                <img src="/img/light_on.png" width="30%" align="center" style="float:left;">
+                            </div>
+                            -->
+                            <div class="alert alert-info alert-dismissable">
+                                <h4 style="text-align:center"> 불이 켜져 있습니다 </h4>
+                            </div>
+                            
+                            {% else %}
+                                <span class="label label-info"> The Light is Off.</span>
+                            {% endif %}
+                        
+                         <!-- 
+                            <table class="table table-hover">
+                                <tbody>
+                                         info.name ,info.content , info.alarm_type, info.device_ip ,info.timestamp
+                                    
+                                        {% for info in dev_info %}
+                                        {% if info.alarm_type == 1 %}
+                                            <tr class="info">
+                                        {% elif info.alarm_type == 2 %}
+                                            <tr class="success">
+                                        {% elif info.alarm_type == 3 %}
+                                            <tr class="warning">
+                                        {% elif info.alarm_type == 4 %}
+                                            <tr class="danger">
+                                        {% endif %}
+                                            <td> {{ info.name }} </td>
+                                            <td> {{ info.content }} </td>
+                                            <td> {{ info.timestamp }} </td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                </tbody>
+                                
+                            </table>
+                        -->
+
+                            <div class="text-right">
+                                <a href="#">자세히 보기 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-desktop"></i> IoT Device 2</h3>
+                        </div>
+                        <div class="panel-body">
+                        <br><br><br><br><br>
+                            <div class="text-right">
+                                <a href="#"> 자세히 보기 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-desktop"></i> IoT Device 3</h3>
+                        </div>
+                        <div class="panel-body">
+                        <br><br><br><br><br>
+                            <div class="text-right">
+                                <a href="#"> 자세히 보기 <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+<form method="POST" id="speech">
+    <input type="hidden" name="red_value" id="red_value" value="255" class="form-control">
+    <input type="hidden" name="green_value" id="green_value" value="255" class="form-control">
+    <input type="hidden" name="blue_value" id="blue_value" value="255" class="form-control">
+    <input type="hidden" name="power" value="50" class="form-control">
+    <input type="hidden" name="alarm_command" value ="0">
+    <input type="hidden" name="alarm_text" value="0">
+</form>
+
+
+{% endblock %}
+{% block footer %}
+<script>
+function random_sel(){
+    var r = Math.floor(Math.random() * 4 ) + 1;
+    document.getElementById("rand").value=r;
+
+    var infoData = $("#test").serialize();
+
+    $.ajax({
+        type : "POST",
+        url : "{{ url_for('main.data_upload') }}",
+        data : infoData,
+    });
+
+    //document.getElementById("test").submit();
+
+}
+</script>
+<script src="{{ url_for('js_static', filename='annyang.min.js') }}"></script>
+<script src="{{ url_for('js_static', filename='speechkitt.min.js') }}"></script>
+<script>
+if (annyang) {
+  // Let's define our first command. First the text we expect, and then the function it should call
+  var commands = {
+    '안녕': function() {
+      $("#speech").find("[name=power]").val("50");
+      alert("asd");
+      rgbData = $("#speech").serialize();
+      $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_light') }}",
+            data : rgbData,
+        })
+    },
+    '꺼져': function() {
+      $("#speech").find("[name=power]").val("0");
+      rgbData = $("#speech").serialize();
+      $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_light') }}",
+            data : rgbData,
+        })
+    },
+    '알람 설정 *tag' : function(tag){
+        $("#speech").find("[name=alarm_command]").val("1");
+        $("#speech").find("[name=alarm_text]").val(tag);
+        Data = $("#speech").serialize();
+        $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_alarm') }}",
+            data : Data,
+        })
+        alert(tag);
+    },
+    '설정 해줘' : function(){
+        $("#speech").find("[name=alarm_command]").val("1");
+        Data = $("#speech").serialize();
+        $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_alarm') }}",
+            data : Data,
+        })
+        alert("config");
+    },
+    '알람 꺼' : function(){
+        $("#speech").find("[name=alarm_command]").val("2");
+        Data = $("#speech").serialize();
+        $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_alarm') }}",
+            data : Data,
+        })
+        alert("alarm off");
+    },
+    '나 잘래' : function(){
+        $("#speech").find("[name=alarm_command]").val("3");
+        Data = $("#speech").serialize();
+        $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_alarm') }}",
+            data : Data,
+        })
+        alert("sleep");
+    }
+  };
+  annyang.setLanguage('ko');
+  // Add our commands to annyang
+  annyang.addCommands(commands);
+
+  // Tell KITT to use annyang
+
+  
+  SpeechKITT.annyang();
+
+  // Define a stylesheet for KITT to use
+  SpeechKITT.setStylesheet("{{ url_for('css_static', filename='flat_c.css') }}");
+
+  //$('#speech').SpeechKITT.vroom();
+  // Render KITT's interface
+  SpeechKITT.vroom();
+
+  // Start listening. You can call this here, or attach this call to an event, button, etc.
+  annyang.start();
+}
+
+</script>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script>
+        function getExtension(filename) {
+            var parts = filename.split('.');
+            return parts[parts.length - 1];
+        }
+
+        $(document).ready(function(){
+            $('form#pcap_form').on('submit', function(event) {
+                if(getExtension($('#pcap_file').val()) != 'pcap'){
+                    alert('확장자가 pcap인 파일만 업로드 가능합니다.');
+                    return false
+                }
+                event.preventDefault();
+
+                var formData = new FormData($(this)[0]);
+                $.ajax({
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+
+                        xhr.upload.addEventListener('progress', function(e) {
+
+                            if(e.lengthComputable) {
+                                var percentage = (e.loaded / e.total)*100;
+                                var progress_bar = document.getElementById('pcap_upload_progress_bar');
+                                progress_bar.style.width = String(percentage) + "%";
+                                progress_bar.innerText = String(parseInt(percentage)) + "% Finish";
+                            }
+                        });
+                        return xhr;
+                    },
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+
+                    success: function(response) {
+                        // window.location.replace('/' + response);
+                        window.location.reload(true);
+                    }
+                });
+                return false;
+            });
+        });
+
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Upload
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="{{ url_for('main.index') }}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-edit"></i> Upload
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Analysis Tasks Panel</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    {% for pcap in user.pcap %}
+                                        <a href="{{ url_for('pcap.result', pcap_name=pcap.fake_filename) }}" class="list-group-item">
+                                            <span class="badge">{{ pcap.upload_timestamp }}</span>
+                                            {% if pcap.is_done == 0 %}
+                                                <i class="fa fa-fw fa-clock-o"></i> In Progress analysis:
+                                            {% elif pcap.is_done == 1 %}
+                                                <i class="fa fa-fw fa-check"></i> Completed analysis:
+                                            {% elif pcap.is_done == 2 %}
+                                                <i class="fa fa-fw fa-warning"></i> Error analysis:
+                                            {% endif %}
+                                            <strong>{{ pcap.filename }}</strong>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                                <div class="text-right">
+                                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h2>Progress</h2>
+
+                <div class="progress">
+                    <!-- progress-bar-success progress-bar-info -->
+                    <div class="progress-bar progress-bar-success progress-bar-striped active"
+                         role="progressbar"
+                         aria-valuemin="0"
+                         aria-valuemax="100"
+                         style="width:0%"
+                         id="pcap_upload_progress_bar"
+                    >
+                        Upload
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <form role="form" id="pcap_form" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="disabledSelect">Personal pcap ID</label>
+                                <input class="form-control" name="pcap_id" id="pcap_id" type="text" value="{{ pcap_id }}" disabled="">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Upload pcap</label>
+                                <input id="pcap_file" type="file" name="pcap">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit Button</button>
+                            <button type="reset" class="btn btn-default">Reset Button</button>
+
+                        </form>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+
+
+{% endblock %}

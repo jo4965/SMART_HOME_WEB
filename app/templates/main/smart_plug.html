@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block body %}
+<style>
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+  .toggle.ios .toggle-handle { border-radius: 20px; }
+</style>
+<div id="page-wrapper">
+
+	<div class="container-fluid">
+
+		<!-- Page Heading -->
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">
+					Smart Plug <small> Electricity Viewer </small>
+				</h1>
+				<ol class="breadcrumb">
+					<li>
+						<i class="fa fa-dashboard"></i>  <a href="#">Dashboard</a>
+					</li>
+				</ol>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-offset-1 col-lg-10">
+				<h2 class="page-header"> View </h2>
+				<div class="col-lg-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Plug 1 </h3>
+						</div>
+						<div class="panel-body">
+						<input data-toggle="toggle" data-style="slow ios"
+						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
+						type="checkbox">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Plug 2 </h3>
+						</div>
+						<div class="panel-body">
+						<input data-toggle="toggle" data-style="slow ios"
+						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
+						type="checkbox">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Plug 3 </h3>
+						</div>
+						<div class="panel-body">
+						<input data-toggle="toggle" data-style="slow ios"
+						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
+						type="checkbox">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Plug 4 </h3>
+						</div>
+						<div class="panel-body">
+						<input data-toggle="toggle" data-style="slow ios"
+						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
+						type="checkbox">
+						</div>
+					</div>
+				</div>
+								<div class="col-lg-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Plug 5 </h3>
+						</div>
+						<div class="panel-body">
+						<input data-toggle="toggle" data-style="slow ios"
+						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
+						type="checkbox">
+						</div>
+					</div>
+				</div>
+								<div class="col-lg-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"> Plug 6 </h3>
+						</div>
+						<div class="panel-body">
+						<input data-toggle="toggle" data-style="slow ios"
+						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
+						type="checkbox">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container-fluid -->
+
+</div>
+
+{% endblock %}
+{% block footer %}
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<script>
+	function send_status_to_door(){
+		var statData = $("#status_form").serialize();
+		$.ajax({
+			type : "POST",
+			url : "{{ url_for('main.control_smart_door') }}",
+			data : statData,
+		});
+	}
+</script>
+
+{% endblock %}

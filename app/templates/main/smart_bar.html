@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div id="page-wrapper">
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Smart Bar <small> Private vending system </small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-dashboard"></i>  <a href="#">Dashboard</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-4">
+                <h2 class="page-header"> 주문하기 </h2>
+                <h3> 음료를 선택해주세요! </h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="POST" action="#">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="beverage" value="coffee" autocomplete="off"> Coffee
+                                </label>
+
+                                <label class="btn btn-default">
+                                    <input type="radio" name="beverage" value="coke" autocomplete="off"> Coke
+                                </label>
+
+                                <label class="btn btn-default">
+                                    <input type="radio" name="beverage" value="water" autocomplete="off"> Water
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <h3>어디에 계신가요?</h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="POST" action="#">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="8" autocomplete="off"> 8
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="6" autocomplete="off"> 6
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="4" autocomplete="off"> 4
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="2" autocomplete="off"> 2
+                                </label>
+                                <br>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="7" autocomplete="off"> 7
+                                </label> 
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="5" autocomplete="off"> 5
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="3" autocomplete="off"> 3
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="position" value="1" autocomplete="off"> 1
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <h3> 이제 준비가 끝났습니다. </h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                            <div class="text-right">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <button type="button" class="btn btn-primary" > 주문하기 </button> 
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-offset-1 col-lg-4">
+                <h2 class="page-header"> Status </h2>
+                <button type="button" class="btn btn-info" disabled="disabled"> Ready </button>
+            </div>
+        </div>
+        <br><br><br>
+    <!--
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Total DNS Statistics</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Host</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h2>DNS Request Analysis</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Host</th>
+                            <th>Timestamp</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+-->
+<!-- /.row -->
+
+
+        <!--
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Basic Table</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Visits</th>
+                                <th>% New Visits</th>
+                                <th>Revenue</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>/index.html</td>
+                                <td>1265</td>
+                                <td>32.3%</td>
+                                <td>$321.33</td>
+                            </tr>
+                            <tr>
+                                <td>/about.html</td>
+                                <td>261</td>
+                                <td>33.3%</td>
+                                <td>$234.12</td>
+                            </tr>
+                            <tr>
+                                <td>/sales.html</td>
+                                <td>665</td>
+                                <td>21.3%</td>
+                                <td>$16.34</td>
+                            </tr>
+                            <tr>
+                                <td>/blog.html</td>
+                                <td>9516</td>
+                                <td>89.3%</td>
+                                <td>$1644.43</td>
+                            </tr>
+                            <tr>
+                                <td>/404.html</td>
+                                <td>23</td>
+                                <td>34.3%</td>
+                                <td>$23.52</td>
+                            </tr>
+                            <tr>
+                                <td>/services.html</td>
+                                <td>421</td>
+                                <td>60.3%</td>
+                                <td>$724.32</td>
+                            </tr>
+                            <tr>
+                                <td>/blog/post.html</td>
+                                <td>1233</td>
+                                <td>93.2%</td>
+                                <td>$126.34</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2>Striped Rows</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Visits</th>
+                                <th>% New Visits</th>
+                                <th>Revenue</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>/index.html</td>
+                                <td>1265</td>
+                                <td>32.3%</td>
+                                <td>$321.33</td>
+                            </tr>
+                            <tr>
+                                <td>/about.html</td>
+                                <td>261</td>
+                                <td>33.3%</td>
+                                <td>$234.12</td>
+                            </tr>
+                            <tr>
+                                <td>/sales.html</td>
+                                <td>665</td>
+                                <td>21.3%</td>
+                                <td>$16.34</td>
+                            </tr>
+                            <tr>
+                                <td>/blog.html</td>
+                                <td>9516</td>
+                                <td>89.3%</td>
+                                <td>$1644.43</td>
+                            </tr>
+                            <tr>
+                                <td>/404.html</td>
+                                <td>23</td>
+                                <td>34.3%</td>
+                                <td>$23.52</td>
+                            </tr>
+                            <tr>
+                                <td>/services.html</td>
+                                <td>421</td>
+                                <td>60.3%</td>
+                                <td>$724.32</td>
+                            </tr>
+                            <tr>
+                                <td>/blog/post.html</td>
+                                <td>1233</td>
+                                <td>93.2%</td>
+                                <td>$126.34</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        <!--
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Contextual Classes</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Visits</th>
+                                <th>% New Visits</th>
+                                <th>Revenue</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="active">
+                                <td>/index.html</td>
+                                <td>1265</td>
+                                <td>32.3%</td>
+                                <td>$321.33</td>
+                            </tr>
+                            <tr class="success">
+                                <td>/about.html</td>
+                                <td>261</td>
+                                <td>33.3%</td>
+                                <td>$234.12</td>
+                            </tr>
+                            <tr class="warning">
+                                <td>/sales.html</td>
+                                <td>665</td>
+                                <td>21.3%</td>
+                                <td>$16.34</td>
+                            </tr>
+                            <tr class="danger">
+                                <td>/blog.html</td>
+                                <td>9516</td>
+                                <td>89.3%</td>
+                                <td>$1644.43</td>
+                            </tr>
+                            <tr>
+                                <td>/404.html</td>
+                                <td>23</td>
+                                <td>34.3%</td>
+                                <td>$23.52</td>
+                            </tr>
+                            <tr>
+                                <td>/services.html</td>
+                                <td>421</td>
+                                <td>60.3%</td>
+                                <td>$724.32</td>
+                            </tr>
+                            <tr>
+                                <td>/blog/post.html</td>
+                                <td>1233</td>
+                                <td>93.2%</td>
+                                <td>$126.34</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2>Bootstrap Docs</h2>
+                    <p>For complete documentation, please visit <a target="_blank" href="http://getbootstrap.com/css/#tables">Bootstrap's Tables Documentation</a>.</p>
+                </div>
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+
+    {% endblock %}
+    {% block footer %}
+    <script>
+        function send_rgb_to_led(){
+            var rgbData = $("#smart_light_form").serialize();
+            $.ajax({
+                type : "POST",
+                url : "{{ url_for('main.control_smart_light') }}",
+                data : rgbData,
+            });
+        }
+    </script>
+
+    {% endblock %}
