@@ -108,7 +108,7 @@ def control_smart_light():
 		led_control_info += [red, green, blue, power]
 		led_control_info = '_'.join(led_control_info)
 
-		tmp_thr = Thread(target=connect_to_iot, args=("192.168.123.148", led_control_info))
+		tmp_thr = Thread(target=connect_to_iot, args=("192.168.43.44", led_control_info))
 		tmp_thr.start()
 		return redirect(url_for("main.smart_light_view"))
 
