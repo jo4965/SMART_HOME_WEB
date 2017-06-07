@@ -311,7 +311,6 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
-        alert(tag);
     },
     '설정 해줘' : function(){
         $("#speech").find("[name=alarm_command]").val("1");
@@ -321,7 +320,6 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
-        alert("config");
     },
     '알람 꺼' : function(){
         $("#speech").find("[name=alarm_command]").val("2");
@@ -331,7 +329,6 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
-        alert("alarm off");
     },
     '나 잘래' : function(){
         $("#speech").find("[name=alarm_command]").val("3");
@@ -341,7 +338,6 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
-        alert("sleep");
     }
   };
   annyang.setLanguage('ko');

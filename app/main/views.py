@@ -1,8 +1,8 @@
 import time
 import sys
-from threading import Thread
+from threading import Thread, Timer
 from flask import stream_with_context, request, Response, redirect, url_for,\
-render_template
+render_template, session
 
 from . import main_blueprint
 from app.models import *
@@ -10,6 +10,8 @@ import datetime
 import socket
 import select
 
+def mutual_ex(mutex):
+	return mutex[0]
 
 def connect_to_iot(ip, led_control_info):
 	host = ip # Local host address
@@ -52,8 +54,8 @@ def data_upload():
 	 print(dev_name)
 	 dev_content = request.form['content']
 	 dev_type = request.form['alarm_type']
-	 dev_ip = request.form['IP_address']
-	 timestamp = datetime.datetime.now().replace(microsecond=0)
+	 dev_ip = request.form['IP_address'
+]	 timestamp = datetime.datetime.now().replace(microsecond=0)
 
 	 dev_info = Device(dev_name, dev_content, dev_type, dev_ip, timestamp)
 	 add_and_commit(db.session, dev_info)
@@ -164,7 +166,7 @@ def control_smart_feeder():
 def control_smart_alarm():
 	if request.method == 'POST':
 
-		alarm_ip = "192.168.123.114"
+		alarm_ip = "127.0.0.1"
 		alarm_command = request.form["alarm_command"]
 		
 		if alarm_command == '1':
@@ -175,11 +177,15 @@ def control_smart_alarm():
 		alarm_control_info = '_'.join([alarm_command, alarm_text])
 		tmp_thr = Thread(target=connect_to_iot, args= (alarm_ip, alarm_control_info ) )
 		tmp_thr.start()
-
+		
+		led_ip = "192.168.123.118"
 		# na jale also need to send to led
 		if alarm_command =='3':
 			led_control_info = "5\n"
-			led_ip = "192.168.123.118"
+			tmp_thr = Thread(target=connect_to_iot, args = (led_ip, led_control_info ) )
+			tmp_thr.start()
+		elif alarm_command =='2':
+			led_control_info = "0\n"
 			tmp_thr = Thread(target=connect_to_iot, args = (led_ip, led_control_info ) )
 			tmp_thr.start()
 
