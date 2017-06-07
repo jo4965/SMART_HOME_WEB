@@ -23,34 +23,33 @@
 
         </div>
         <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-offset-1 col-lg-4">
-                <h2 class="page-header"> 주문하기 </h2>
-                <h3> 음료를 선택해주세요! </h3>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <form method="POST" action="#">
+        <form method="POST" id="smart_bar_form" action="#">
+            <div class="row">
+                <div class="col-lg-offset-1 col-lg-4">
+                    <h2 class="page-header"> 주문하기 </h2>
+                    <h3> 음료를 선택해주세요! </h3>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default">
-                                    <input type="radio" name="beverage" value="coffee" autocomplete="off"> Coffee
+                                    <input type="radio" name="beverage" value="1" autocomplete="off"> Coffee
                                 </label>
 
                                 <label class="btn btn-default">
-                                    <input type="radio" name="beverage" value="coke" autocomplete="off"> Coke
+                                    <input type="radio" name="beverage" value="2" autocomplete="off"> Coke
                                 </label>
 
                                 <label class="btn btn-default">
-                                    <input type="radio" name="beverage" value="water" autocomplete="off"> Water
+                                    <input type="radio" name="beverage" value="3" autocomplete="off"> Water
                                 </label>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
 
-                <h3>어디에 계신가요?</h3>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <form method="POST" action="#">
+                    <h3>어디에 계신가요?</h3>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default">
                                     <input type="radio" name="position" value="8" autocomplete="off"> 8
@@ -78,26 +77,35 @@
                                     <input type="radio" name="position" value="1" autocomplete="off"> 1
                                 </label>
                             </div>
-                        </form>
+
+                        </div>
                     </div>
-                </div>
+                </form>
                 <h3> 이제 준비가 끝났습니다. </h3>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                            <div class="text-right">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <button type="button" class="btn btn-primary" > 주문하기 </button> 
-                                </div>
+                        <div class="text-right">
+                            <div class="btn-group" data-toggle="buttons">
+                                <button type="button" class="btn btn-primary" onclick="send_data_to_bar();" > 주문하기 </button> 
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-offset-1 col-lg-4">
                 <h2 class="page-header"> Status </h2>
-                <button type="button" class="btn btn-info" disabled="disabled"> Ready </button>
+                <ol>
+                <h4>
+                <li class="list-group-item list-group-item-info" id="status">
+                주문을 기다리는 중입니다.
+                </li>
+                </h4>
+                </ol>
             </div>
+
         </div>
-        <br><br><br>
+    </div>
+    <br><br><br>
     <!--
     <div class="row">
         <div class="col-lg-6">
@@ -348,12 +356,12 @@
     {% endblock %}
     {% block footer %}
     <script>
-        function send_rgb_to_led(){
-            var rgbData = $("#smart_light_form").serialize();
+        function send_data_to_bar(){
+            var data = $("#smart_bar_form").serialize();
             $.ajax({
                 type : "POST",
-                url : "{{ url_for('main.control_smart_light') }}",
-                data : rgbData,
+                url : "{{ url_for('main.control_smart_bar') }}",
+                data : data,
             });
         }
     </script>

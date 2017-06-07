@@ -43,102 +43,101 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<h4> 오후 </h4>
+						<form id="smart_feeder_form" method="POST">
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="12" autocomplete="off"> 00:00
+								<input type="checkbox" name="time" value="12" > 00:00
 							</label>
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="13" autocomplete="off"> 01:00
+								<input type="checkbox" name="time" value="13" > 01:00
 							</label>
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="14" autocomplete="off"> 02:00
+								<input type="checkbox" name="time" value="14" > 02:00
 							</label>
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="15" autocomplete="off"> 03:00
+								<input type="checkbox" name="time" value="15" > 03:00
 							</label>
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="16" autocomplete="off"> 04:00
+								<input type="checkbox" name="time" value="16" > 04:00
 							</label> 
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="17" autocomplete="off"> 05:00
+								<input type="checkbox" name="time" value="17" > 05:00
 							</label>
 							<br>
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="18" autocomplete="off"> 06:00
+								<input type="checkbox" name="time" value="18" > 06:00
 							</label>
 
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="19" autocomplete="off"> 07:00
+								<input type="checkbox" name="time" value="19" > 07:00
 							</label>
 
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="20" autocomplete="off"> 08:00
+								<input type="checkbox" name="time" value="20" > 08:00
 							</label>
 
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="21" autocomplete="off"> 09:00
+								<input type="checkbox" name="time" value="21" > 09:00
 							</label>
 
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="22" autocomplete="off"> 10:00
+								<input type="checkbox" name="time" value="22" > 10:00
 							</label>
 
 							<label class="btn btn-warning">
-								<input type="checkbox" name="time" value="23" autocomplete="off"> 11:00
+								<input type="checkbox" name="time" value="23" > 11:00
 							</label>
 						</div>
-						<div class="form-group">
 							<h4> 오전 </h4>
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="0" autocomplete="off"> 00:00
+									<input type="checkbox" name="time" value="0" > 00:00
 								</label>
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="1" autocomplete="off"> 01:00
+									<input type="checkbox" name="time" value="1" > 01:00
 								</label>
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="2" autocomplete="off"> 02:00
+									<input type="checkbox" name="time" value="2" > 02:00
 								</label>
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="3" autocomplete="off"> 03:00
+									<input type="checkbox" name="time" value="3" > 03:00
 								</label>
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="4" autocomplete="off"> 04:00
+									<input type="checkbox" name="time" value="4" > 04:00
 								</label> 
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="5" autocomplete="off"> 05:00
+									<input type="checkbox" name="time" value="5" > 05:00
 								</label>
 								<br>
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="6" autocomplete="off"> 06:00
+									<input type="checkbox" name="time" value="6" > 06:00
 								</label>
 
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="7" autocomplete="off"> 07:00
+									<input type="checkbox" name="time" value="7" > 07:00
 								</label>
 
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="8" autocomplete="off"> 08:00
+									<input type="checkbox" name="time" value="8" > 08:00
 								</label>
 
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="9" autocomplete="off"> 09:00
+									<input type="checkbox" name="time" value="9" > 09:00
 								</label>
 
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="10" autocomplete="off"> 10:00
+									<input type="checkbox" name="time" value="10" > 10:00
 								</label>
 
 								<label class="btn btn-warning">
-									<input type="checkbox" name="time" value="11" autocomplete="off"> 11:00
+									<input type="checkbox" name="time" value="11" > 11:00
 								</label>
-
-
-							</div>
+							</form>
 							<div class="text-right">
-									<div class="form-group">
-										<button type="submit" class="btn btn-primary"> 설정 적용 </button>
-									</div>
+
+										<button type="button" class="btn btn-primary" onclick="send_data_to_feeder();">
+										설정 적용 </button>
+
 								</div>
 						</div>
 					</div>
@@ -159,12 +158,12 @@
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 	<script>
-		function send_status_to_door(){
-			var statData = $("#status_form").serialize();
+		function send_data_to_feeder(){
+			var data = $("#smart_feeder_form").serialize();
 			$.ajax({
 				type : "POST",
-				url : "{{ url_for('main.control_smart_door') }}",
-				data : statData,
+				url : "{{ url_for('main.control_smart_feeder') }}",
+				data : data,
 			});
 		}
 	</script>

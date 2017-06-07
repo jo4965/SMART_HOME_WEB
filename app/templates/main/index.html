@@ -283,7 +283,7 @@ function random_sel(){
 if (annyang) {
   // Let's define our first command. First the text we expect, and then the function it should call
   var commands = {
-    '안녕': function() {
+    '불 꺼줘': function() {
       $("#speech").find("[name=power]").val("50");
       alert("asd");
       rgbData = $("#speech").serialize();
@@ -293,7 +293,7 @@ if (annyang) {
             data : rgbData,
         })
     },
-    '꺼져': function() {
+    '불 꺼': function() {
       $("#speech").find("[name=power]").val("0");
       rgbData = $("#speech").serialize();
       $.ajax({
