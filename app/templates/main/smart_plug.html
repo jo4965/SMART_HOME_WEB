@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block body %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
 <style>
   .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
   .toggle.ios .toggle-handle { border-radius: 20px; }
@@ -24,17 +26,41 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-offset-1 col-lg-10">
+				<h2 class="page-header"> 통합 제어 </h2>
+				<div class="panel-heading">
+					<h3 class="panel-title"> 예약하기 </h3>
+				</div>
+				<div class="col-lg-6">
+					<div class="panel panel-default panel-default">
+					<form>
+					<div class='input-group date'>
+						<label for="fromDate"> 켜지는 시간</label>
+						<input type="text" id='fromDate' class="form-control"> 
+						</div>
+						<label for="toDate"> 꺼지는 시간</label>
+						<input id="toDate" type="time">
+
+						<input type="hidden" id="do_open" name="do_open">
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-offset-1 col-lg-10">
 				<h2 class="page-header"> View </h2>
-				<div class="col-lg-2">
+				<div class="col-lg-4">
 					<div class="panel panel-default panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title"> Plug 1 </h3>
 						</div>
 
 						<div class="panel-body">
-						<input data-toggle="toggle" data-style="slow ios"
-						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
-						type="checkbox">
+						<label> 현재 상태</label>
+						<div id="plug1"> 
+							켜져 있음
+						</div>
+
 						<br>
 						<label> 전력량 ( Watt )</label>
 						<div class="alert alert-info" role="alert" id="watt"></div>
@@ -46,7 +72,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-2">
+				<div class="col-lg-4">
 					<div class="panel panel-default panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title"> Plug 2 </h3>
@@ -58,7 +84,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-2">
+				<div class="col-lg-4">
 					<div class="panel panel-default panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title"> Plug 3 </h3>
@@ -82,10 +108,10 @@
 
 {% endblock %}
 {% block footer %}
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 <script>
+    $(function () {
+        $('#fromDate').datepicker();
+    });
 	function send_status_to_door(){
 		var statData = $("#status_form").serialize();
 		$.ajax({

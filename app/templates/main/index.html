@@ -277,6 +277,7 @@ function random_sel(){
 
 }
 </script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
 <script src="{{ url_for('js_static', filename='annyang.min.js') }}"></script>
 <script src="{{ url_for('js_static', filename='speechkitt.min.js') }}"></script>
 <script>
@@ -311,6 +312,7 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
+        alert("알람시간을 " + tag + "으로 설정하였습니다.")
     },
     '설정 해줘' : function(){
         $("#speech").find("[name=alarm_command]").val("1");
@@ -329,6 +331,7 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
+        alert("알람을 끕니다.")
     },
     '나 잘래' : function(){
         $("#speech").find("[name=alarm_command]").val("3");
@@ -338,6 +341,7 @@ if (annyang) {
             url : "{{ url_for('main.control_smart_alarm') }}",
             data : Data,
         })
+        alert("잘자요")
     }
   };
   annyang.setLanguage('ko');

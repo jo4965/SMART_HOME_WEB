@@ -18,16 +18,19 @@ def connect_to_iot(ip, led_control_info):
 	port = 9009 # Medium port number
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.settimeout(2)
+	recv_buf = b"None"
 	try:
 		s.connect((host, port))
 		s.send( led_control_info.encode('utf-8') )
+		print('Connected.')
 		recv_buf = s.recv(1024)
 	except:
 		print('Unable to connect')
-		sys.exit()
 
-	return recv_buf
-	print('Connected.')
+
+	
+	print("Received Data : " + recv_buf.decode('utf-8'))
+	return recv_buf.decode('utf-8')
 
 @main_blueprint.route('/')
 def index():
@@ -54,8 +57,8 @@ def data_upload():
 	 print(dev_name)
 	 dev_content = request.form['content']
 	 dev_type = request.form['alarm_type']
-	 dev_ip = request.form['IP_address'
-]	 timestamp = datetime.datetime.now().replace(microsecond=0)
+	 dev_ip = request.form['IP_address']
+	 timestamp = datetime.datetime.now().replace(microsecond=0)
 
 	 dev_info = Device(dev_name, dev_content, dev_type, dev_ip, timestamp)
 	 add_and_commit(db.session, dev_info)
@@ -109,9 +112,9 @@ def control_smart_light():
 		led_control_info += [red, green, blue, power]
 		led_control_info = '_'.join(led_control_info)
 
-		tmp_thr = Thread(target=connect_to_iot, args=("192.168.43.44", led_control_info))
-		tmp_thr.start()
-		return redirect(url_for("main.smart_light_view"))
+		recv_buf = connect_to_iot("192.168.123.109", led_control_info)
+
+		return recv_buf
 
 
 @main_blueprint.route("/control_smart_door", methods=['POST'])
@@ -143,7 +146,7 @@ def control_smart_bar():
 		bar_control_info = ['[', '1', 'SmartBar', 'ORDER', '2', str(position), str(beverage), ']']
 		bar_control_info = '_'.join(bar_control_info)
 		print(bar_control_info)
-		connect_to_iot(bar_ip, bar_control_info, recv_buf)
+		recv_buf = connect_to_iot(bar_ip, bar_control_info)
 		#tmp_thr = Thread(target=connect_to_iot, args=(bar_ip, bar_control_info))
 		#tmp_thr.start()
 		print(recv_buf)
@@ -152,21 +155,22 @@ def control_smart_bar():
 @main_blueprint.route("/control_smart_feeder", methods=['POST'])
 def control_smart_feeder():
 	if request.method == 'POST':
-		time = request.form.getlist("time")
-		print(time)
-		feeder_ip = "127.0.0.1"
-		feeder_control_info = time
-		#feeder_control_info = '_'.join(feeder_control_info)
-		#print(feeder_control_info)
-		tmp_thr = Thread(target=connect_to_iot, args=(feeder_ip, feeder_control_info))
-		tmp_thr.start()
+		feeder_ip = "192.168.43.96"
+		feeder_control_info = ""
+		if request.form["command"] == 1:
+			time = request.form.getlist("time")
+			print(time)
+			feeder_control_info = ['[', '4', 'Feeder', 'SetTime', str(len(time))] + time + [']']
+			feeder_control_info = '_'.join(feeder_control_info)
+		print(feeder_control_info)
+		connect_to_iot(feeder_ip, feeder_control_info)
 		return "0"
 
 @main_blueprint.route("/control_smart_alarm", methods=['POST'])
 def control_smart_alarm():
 	if request.method == 'POST':
 
-		alarm_ip = "127.0.0.1"
+		alarm_ip = "192.168.123.105"
 		alarm_command = request.form["alarm_command"]
 		
 		if alarm_command == '1':
@@ -177,7 +181,7 @@ def control_smart_alarm():
 		alarm_control_info = '_'.join([alarm_command, alarm_text])
 		tmp_thr = Thread(target=connect_to_iot, args= (alarm_ip, alarm_control_info ) )
 		tmp_thr.start()
-		
+
 		led_ip = "192.168.123.118"
 		# na jale also need to send to led
 		if alarm_command =='3':

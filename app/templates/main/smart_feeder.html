@@ -45,6 +45,7 @@
 						<h4> 오후 </h4>
 						<form id="smart_feeder_form" method="POST">
 						<div class="btn-group" data-toggle="buttons">
+							<input type="hidden" id="command" name="command">
 							<label class="btn btn-warning">
 								<input type="checkbox" name="time" value="12" > 00:00
 							</label>
@@ -159,6 +160,7 @@
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 	<script>
 		function send_data_to_feeder(){
+			$("#command").val("1")
 			var data = $("#smart_feeder_form").serialize();
 			$.ajax({
 				type : "POST",
@@ -166,6 +168,38 @@
 				data : data,
 			});
 		}
+
+		function get_weight_from_feeder(){
+			// weight
+			$("#command").val("2")
+			$.ajax({
+				type : "POST",
+				url : "{{ url_for('main.control_smart_feeder') }}",
+				data : data,
+			});
+		}
+
+		function get_weight_from_feeder(){
+			// time
+			$("#command").val("3")
+			$.ajax({
+				type : "POST",
+				url : "{{ url_for('main.control_smart_feeder') }}",
+				data : data,
+			});
+		}
+
+		function get_weight_from_feeder(){
+			// feeding amount
+			$("#command").val("4")
+			$.ajax({
+				type : "POST",
+				url : "{{ url_for('main.control_smart_feeder') }}",
+				data : data,
+			});
+		}
+
+
 	</script>
 
 	{% endblock %}
