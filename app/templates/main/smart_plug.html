@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery.min.js"></script>
 <style>
-  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
-  .toggle.ios .toggle-handle { border-radius: 20px; }
+	.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+	.toggle.ios .toggle-handle { border-radius: 20px; }
 </style>
 <div id="page-wrapper">
 
@@ -25,79 +25,97 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-offset-1 col-lg-10">
+			<div class="col-lg-offset-2 col-lg-8">
 				<h2 class="page-header"> 통합 제어 </h2>
-				<div class="panel-heading">
-					<h3 class="panel-title"> 예약하기 </h3>
-				</div>
 				<div class="col-lg-6">
 					<div class="panel panel-default panel-default">
-					<form>
-					<div class='input-group date'>
-						<label for="fromDate"> 켜지는 시간</label>
-						<input type="text" id='fromDate' class="form-control"> 
-						</div>
-						<label for="toDate"> 꺼지는 시간</label>
-						<input id="toDate" type="time">
-
-						<input type="hidden" id="do_open" name="do_open">
-					</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-offset-1 col-lg-10">
-				<h2 class="page-header"> View </h2>
-				<div class="col-lg-4">
-					<div class="panel panel-default panel-primary">
 						<div class="panel-heading">
-							<h3 class="panel-title"> Plug 1 </h3>
+							<h3 class="panel-title"> 제어하기 </h3>
 						</div>
-
 						<div class="panel-body">
-						<label> 현재 상태</label>
-						<div id="plug1"> 
-							켜져 있음
-						</div>
-
-						<br>
-						<label> 전력량 ( Watt )</label>
-						<div class="alert alert-info" role="alert" id="watt"></div>
-						<!--
-						<label> 시작 시간 예약 </label>
-						<input type="password" name="password" class="form-control" id="pass" placeholder="암호">
-						<label> 종료 시간 예약 </label>
-						-->
+							<h4> 모든 플러그를 한번에 끄거나 켤 수 있습니다.</h4>
+							<form method="POST" id="smart_plug_form1" action="{{ url_for('main.control_smart_plug')}}">
+								<div class="text-right">
+									<input type="hidden" name="send_all" id="send_all" value="0">
+									<button class="btn btn-success" onclick="send_all_on();"> 전체 켜기 </button>
+									<button class="btn btn-danger" onclick="send_all_off();"> 전체 끄기 </button>
+								</div>
+							</form>
+							
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="panel panel-default panel-primary">
+
+
+				<div class="col-lg-6">
+					<div class="panel panel-default panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title"> Plug 2 </h3>
+							<h3 class="panel-title"> 총 전력량 </h3>
 						</div>
 						<div class="panel-body">
-						<input data-toggle="toggle" data-style="slow ios"
-						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
-						type="checkbox">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="panel panel-default panel-primary">
-						<div class="panel-heading">
-							<h3 class="panel-title"> Plug 3 </h3>
-						</div>
-						<div class="panel-body">
-						<input data-toggle="toggle" data-style="slow ios"
-						data-on="Connected" data-off="Disconnected" name="status" value="connected" 
-						type="checkbox">
+							<h5><label> 총 전력량 ( Watt )</label></h5>
+							<div class="text-right" id="power">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-lg-offset-2 col-lg-8">
+					<h2 class="page-header"> View </h2>
+
+					<div class="col-lg-4">
+						<div class="panel panel-default panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title"> Plug 1 </h3>
+							</div>
+							
+
+							<div class="panel-body">
+								<label> 현재 상태</label>
+								<form method = "POST" id="smart_plug_form2" action="{{ url_for('main.control_smart_plug')}}">
+									<div id="plug1"> 
+									</div>
+									<br>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="panel panel-default panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title"> Plug 2 </h3>
+							</div>
+							<form method = "POST" id="smart_plug_form3" action="{{ url_for('main.control_smart_plug')}}">
+								<div class="panel-body">
+									<label> 현재 상태</label>
+									<div id="plug2"> 
+									</div>
+									<br>
+								</div>
+							</form>
+
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="panel panel-default panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title"> Plug 3 </h3>
+							</div>
+							<form method = "POST" id="smart_plug_form4" action="{{ url_for('main.control_smart_plug')}}">
+								<div class="panel-body">
+									<label> 현재 상태</label>
+									<div id="plug3"> 
+									</div>
+									<br>
+								</div>
+							</form>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
+		<br>	<br>	<br>
 
 		<!-- /.row -->
 
@@ -109,9 +127,14 @@
 {% endblock %}
 {% block footer %}
 <script>
-    $(function () {
-        $('#fromDate').datepicker();
-    });
+	function send_all_on(){
+		$("#send_all").val("1");
+		$("#smart_plug_form1").submit();
+	}
+	function send_all_off(){
+		$("#send_all").val("0");
+		$("#smart_plug_form1").submit();
+	}
 	function send_status_to_door(){
 		var statData = $("#status_form").serialize();
 		$.ajax({
@@ -120,6 +143,85 @@
 			data : statData,
 		});
 	}
+	function get_plug_onoff(){
+		var now_on = '<input type="hidden" name="send_all" value="0"><span class="pull-right"><button class="btn btn-info" disabled="disabled"> ON  </button><button class="btn btn-danger" onclick="plug_toggle();"> OFF </button></span>';
+		var now_off='<input type="hidden" name="send_all" value="1"><span class="pull-right"><button class="btn btn-info" onclick="plug_toggle();"> ON  </button><button class="btn btn-danger" disabled="disabled"> OFF </button></span>';
+		var img_url = "{{ url_for('img_static', filename='loading.gif') }}"
+		$.ajax({
+			type : "POST",
+			url : "{{ url_for('main.get_plug_onoff') }}",
+			beforeSend : function(){
+				$("#plug1").html("<img src="+ img_url +">")
+				$("#plug2").html("<img src="+ img_url +">")
+				$("#plug3").html("<img src="+ img_url +">")
+			},
+			success : function(onoff){
+				if ( onoff[1] == '0' )
+					$("#plug1").html(now_off);
+				else if (onoff[1] == '1')
+					$("#plug1").html(now_on);
+				else
+					$("#plug1").html("error_2")
+				
+				if ( onoff[3] == '0' )
+					$("#plug2").html(now_off);
+				else if (onoff[3] == '1')
+					$("#plug2").html(now_on);
+				else
+					$("#plug2").html("error_2")
+				
+				if ( onoff[5] == '0' )
+					$("#plug3").html(now_off);
+				else if (onoff[5] == '1')
+					$("#plug3").html(now_on);
+				else
+					$("#plug3").html("error_2")
+			},
+			error : function(){
+				$("#plug1").html("no_response_error");
+				$("#plug2").html("no_response_error");
+				$("#plug3").html("no_response_error");
+			},
+
+		});
+	}
+	function get_plug_power(){
+		var img_url = "{{ url_for('img_static', filename='loading.gif') }}"
+		var src_start = "<div class='alert alert-info' role='alert'>"
+		var src_end = "</div>"
+		$.ajax({
+			type : "POST",
+			url : "{{ url_for('main.get_plug_power') }}",
+			beforeSend : function(){
+				$("#power").html("<img src="+ img_url +">")
+			},
+			success : function(power){
+				$("#power").html(src_start + power + src_end)
+			},
+			error : function(){
+				$("#power").html("no_response_error")
+			},
+		})
+	}
+	function plug_toggle(){
+		var parent = $(this).parent();
+		if (parent.attr("id") == "plug1"){
+			parent.find("[name=send_all]").val("2");
+			parent.parent().submit();
+		}
+		else if (parent.attr("id") == "plug2"){
+			parent.find("[name=send_all]").val("3");
+			parent.parent().submit();
+		}
+		else if (parent.attr("id") == "plug3"){
+			parent.find("[name=send_all]").val("4");
+			parent.parent().submit();
+		}
+	}
+	get_plug_onoff();
+	get_plug_power();
+
+
 </script>
 
 {% endblock %}

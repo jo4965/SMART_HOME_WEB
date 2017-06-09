@@ -10,9 +10,6 @@ import datetime
 import socket
 import select
 
-def mutual_ex(mutex):
-	return mutex[0]
-
 def connect_to_iot(ip, led_control_info):
 	host = ip # Local host address
 	port = 9009 # Medium port number
@@ -27,8 +24,6 @@ def connect_to_iot(ip, led_control_info):
 	except:
 		print('Unable to connect')
 
-
-	
 	print("Received Data : " + recv_buf.decode('utf-8'))
 	return recv_buf.decode('utf-8')
 
@@ -112,7 +107,7 @@ def control_smart_light():
 		led_control_info += [red, green, blue, power]
 		led_control_info = '_'.join(led_control_info)
 
-		recv_buf = connect_to_iot("192.168.123.109", led_control_info)
+		recv_buf = connect_to_iot("192.168.1.13", led_control_info)
 
 		return recv_buf
 
@@ -137,7 +132,7 @@ def control_smart_door():
 @main_blueprint.route("/control_smart_bar", methods=['POST'])
 def control_smart_bar():
 	if request.method == 'POST':
-		
+
 		bar_ip = "192.168.123.148"
 
 		beverage = request.form["beverage"]
@@ -157,7 +152,8 @@ def control_smart_feeder():
 	if request.method == 'POST':
 		feeder_ip = "192.168.43.96"
 		feeder_control_info = ""
-		if request.form["command"] == 1:
+
+		if request.form["command"] == "1":
 			time = request.form.getlist("time")
 			print(time)
 			feeder_control_info = ['[', '4', 'Feeder', 'SetTime', str(len(time))] + time + [']']
@@ -165,6 +161,60 @@ def control_smart_feeder():
 		print(feeder_control_info)
 		connect_to_iot(feeder_ip, feeder_control_info)
 		return "0"
+
+@main_blueprint.route("/control_smart_park", methods=['POST'])
+def control_smart_park():
+	if request.method == 'POST':
+		print("control_smart_park")
+		park_ip = "192.168.1.5"
+		park_control_info = "s"
+		if request.form["park_command"] == "1":
+			connect_to_iot(park_ip, park_control_info)
+		
+		return "0"
+
+
+@main_blueprint.route("/control_smart_plug", methods=['POST'])
+def control_smart_plug():
+	if request.method == 'POST':
+		print("control_smart_plug")
+		plug_ip = "192.168.1.5"
+		plug_control_info = ""
+		if request.form["send_all"] == "0":
+			plug_control_info = "9"
+		elif request.form["send_all"] == "1":
+			plug_control_info = "0"
+		elif request.form["send_all"] == "2":
+			plug_control_info = "1"
+		elif request.form["send_all"] == "3":
+			plug_control_info = "2"
+		elif request.form["send_all"] == "4":
+			plug_control_info = "3"
+		print(plug_control_info)
+		connect_to_iot(plug_ip, plug_control_info)
+		
+		return redirect(url_for('main.smart_plug_view'))
+
+@main_blueprint.route("/get_plug_onoff", methods=['POST'])
+def get_plug_onoff():
+	if request.method == 'POST':
+		print("get_plug_onoff")
+		plug_ip = "192.168.1.5"
+		plug_get_info = "C"
+		recv_buf = connect_to_iot(plug_ip, plug_get_info)
+		
+		return recv_buf
+
+@main_blueprint.route("/get_plug_power", methods=['POST'])
+def get_plug_power():
+	if request.method == 'POST':
+		print("get_plug_power")
+		plug_ip = "192.168.1.5"
+		plug_get_info = "P"
+		recv_buf = connect_to_iot(plug_ip, plug_get_info)
+		
+		return recv_buf
+
 
 @main_blueprint.route("/control_smart_alarm", methods=['POST'])
 def control_smart_alarm():

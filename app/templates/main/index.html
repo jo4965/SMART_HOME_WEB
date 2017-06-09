@@ -248,13 +248,15 @@ tbody {
         <!-- /.container-fluid -->
 
     </div>
-<form method="POST" id="speech">
+<form method="POST" action="{{ url_for('main.control_smart_park')}}" id="speech">
     <input type="hidden" name="red_value" id="red_value" value="255" class="form-control">
     <input type="hidden" name="green_value" id="green_value" value="255" class="form-control">
     <input type="hidden" name="blue_value" id="blue_value" value="255" class="form-control">
     <input type="hidden" name="power" value="50" class="form-control">
     <input type="hidden" name="alarm_command" value ="0">
     <input type="hidden" name="alarm_text" value="0">
+    <input type="hidden" name="park_command" value="0">
+    <input type="submit" value="submit">
 </form>
 
 
@@ -277,7 +279,7 @@ function random_sel(){
 
 }
 </script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+
 <script src="{{ url_for('js_static', filename='annyang.min.js') }}"></script>
 <script src="{{ url_for('js_static', filename='speechkitt.min.js') }}"></script>
 <script>
@@ -342,7 +344,17 @@ if (annyang) {
             data : Data,
         })
         alert("잘자요")
-    }
+    },
+    '차 빼' : function(){
+        $("#speech").find("[name=park_command]").val("1");
+        Data = $("#speech").serialize();
+        $.ajax({
+            type : "POST",
+            url : "{{ url_for('main.control_smart_park') }}",
+            data : Data,
+        })
+        alert("차를 대기시키겠습니다.")
+    },
   };
   annyang.setLanguage('ko');
   // Add our commands to annyang
