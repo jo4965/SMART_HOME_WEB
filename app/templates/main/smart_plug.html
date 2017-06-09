@@ -144,8 +144,12 @@
 		});
 	}
 	function get_plug_onoff(){
-		var now_on = '<input type="hidden" name="send_all" value="0"><span class="pull-right"><button class="btn btn-info" disabled="disabled"> ON  </button><button class="btn btn-danger" onclick="plug_toggle();"> OFF </button></span>';
-		var now_off='<input type="hidden" name="send_all" value="1"><span class="pull-right"><button class="btn btn-info" onclick="plug_toggle();"> ON  </button><button class="btn btn-danger" disabled="disabled"> OFF </button></span>';
+		var now_on1 = '<input type="hidden" name="send_all" value="0"><span class="pull-right"><button class="btn btn-info" disabled="disabled"> ON  </button><button class="btn btn-danger" onclick="plug_toggle1();"> OFF </button></span>';
+		var now_on2 = '<input type="hidden" name="send_all" value="0"><span class="pull-right"><button class="btn btn-info" disabled="disabled"> ON  </button><button class="btn btn-danger" onclick="plug_toggle2();"> OFF </button></span>';
+		var now_on3 = '<input type="hidden" name="send_all" value="0"><span class="pull-right"><button class="btn btn-info" disabled="disabled"> ON  </button><button class="btn btn-danger" onclick="plug_toggle3();"> OFF </button></span>';
+		var now_off1='<input type="hidden" name="send_all" value="1"><span class="pull-right"><button class="btn btn-info" onclick="plug_toggle1();"> ON  </button><button class="btn btn-danger" disabled="disabled"> OFF </button></span>';
+		var now_off2='<input type="hidden" name="send_all" value="1"><span class="pull-right"><button class="btn btn-info" onclick="plug_toggle2();"> ON  </button><button class="btn btn-danger" disabled="disabled"> OFF </button></span>';
+		var now_off3='<input type="hidden" name="send_all" value="1"><span class="pull-right"><button class="btn btn-info" onclick="plug_toggle3();"> ON  </button><button class="btn btn-danger" disabled="disabled"> OFF </button></span>';
 		var img_url = "{{ url_for('img_static', filename='loading.gif') }}"
 		$.ajax({
 			type : "POST",
@@ -157,25 +161,25 @@
 			},
 			success : function(onoff){
 				if ( onoff[1] == '0' )
-					$("#plug1").html(now_off);
+					$("#plug1").html(now_off1);
 				else if (onoff[1] == '1')
-					$("#plug1").html(now_on);
+					$("#plug1").html(now_on1);
 				else
-					$("#plug1").html("error_2")
-				
+					$("#plug1").html("error_1")
+
 				if ( onoff[3] == '0' )
-					$("#plug2").html(now_off);
+					$("#plug2").html(now_off2);
 				else if (onoff[3] == '1')
-					$("#plug2").html(now_on);
+					$("#plug2").html(now_on2);
 				else
 					$("#plug2").html("error_2")
 				
 				if ( onoff[5] == '0' )
-					$("#plug3").html(now_off);
+					$("#plug3").html(now_off3);
 				else if (onoff[5] == '1')
-					$("#plug3").html(now_on);
+					$("#plug3").html(now_on3);
 				else
-					$("#plug3").html("error_2")
+					$("#plug3").html("error_3")
 			},
 			error : function(){
 				$("#plug1").html("no_response_error");
@@ -203,20 +207,18 @@
 			},
 		})
 	}
-	function plug_toggle(){
-		var parent = $(this).parent();
-		if (parent.attr("id") == "plug1"){
-			parent.find("[name=send_all]").val("2");
-			parent.parent().submit();
-		}
-		else if (parent.attr("id") == "plug2"){
-			parent.find("[name=send_all]").val("3");
-			parent.parent().submit();
-		}
-		else if (parent.attr("id") == "plug3"){
-			parent.find("[name=send_all]").val("4");
-			parent.parent().submit();
-		}
+	function plug_toggle1(){
+		$("#smart_plug_form2").find("[name=send_all]").val("2");
+		$("#smart_plug_form2").submit();
+	}
+	function plug_toggle2(){
+		$("#smart_plug_form3").find("[name=send_all]").val("3");
+		$("#smart_plug_form3").submit();
+	}
+	function plug_toggle3(){
+		$("#smart_plug_form4").find("[name=send_all]").val("4");
+		$("#smart_plug_form4").submit();
+
 	}
 	get_plug_onoff();
 	get_plug_power();

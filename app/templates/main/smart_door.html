@@ -48,7 +48,9 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<label> 마지막으로 문열린 시간 </label>
+						<div id="get_door">
 						<div class="alert alert-info" role="alert"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -85,7 +87,32 @@
 		});
 	}
 
+	function get_door_info(){
+		var img_url = "{{ url_for('img_static', filename='loading.gif') }}"
+		var src_start = "<div class='alert alert-info' role='alert'>"
+		var src_end = "</div>"
+		document.getElementById("do_open").value = "2";
+
+		var statData = $("#smart_door_form").serialize();
+		$.ajax({
+			type : "POST",
+			url : "{{ url_for('main.control_smart_door') }}",
+			data : statData,
+			beforeSend : function(){
+				$("#get_door").html("<img src="+ img_url +">")
+			},
+			success : function(info){
+				$("#get_door").html(src_start + info + src_end)
+			},
+			error : function(){
+				$("#get_door").html("no_response_error")
+			},
+		})
+	}
+
+	get_door_info()
 	function send_close_to_door(){
+		document.getElementById("do_open").value = "2";
 		document.getElementById("do_open").value = "0";
 		var statData = $("#smart_door_form").serialize();
 		$.ajax({
