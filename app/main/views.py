@@ -130,8 +130,8 @@ def control_smart_door():
 		try:
 			timer = time.localtime(float(buf))
 			ret = []
-			ret = str(timer.tm_mon) +"/" + str(timer.tm_mday) + " " \
-			+ str(tm_hour) + ":" + str(tm_min) + ":" + str(tm_sec)
+			ret = str(timer.tm_year) +"-" + str(timer.tm_mon) +"-" + str(timer.tm_mday) + " " \
+			+ str(timer.tm_hour + 1) + ":" + str(timer.tm_min) + ":" + str(timer.tm_sec)
 			print(ret)
 			return str(ret)
 		except Exception as e:
@@ -230,7 +230,7 @@ def get_plug_power():
 def control_smart_alarm():
 	if request.method == 'POST':
 
-		alarm_ip = "192.168.1.5"
+		alarm_ip = "192.168.1.31"
 		alarm_command = request.form["alarm_command"]
 		
 		if alarm_command == '1':
@@ -242,7 +242,7 @@ def control_smart_alarm():
 		tmp_thr = Thread(target=connect_to_iot, args= (alarm_ip, alarm_control_info ) )
 		tmp_thr.start()
 
-		led_ip = "192.168.1.4"
+		led_ip = "192.168.1.30"
 		# na jale also need to send to led
 		if alarm_command =='3':
 			led_control_info = "5\n"
